@@ -56,3 +56,34 @@ public class OrderServiceImpl implements OrderService{
 
 -> 생성자를 추가하여, AppConfig와 연결
 -> 인터페이스만 언급될 뿐, 구현 객체는 언급되지 않음
+
+
+------------------------------------------------------------------------------------
+
+
+[AppConfig 리팩토리]
+각각의 기능이 더 보이도록 리팩토리
+
+public class AppConfig {
+
+    private MemoryMemberRepository getMemoryMemberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    public DiscountPolicy getDiscountPolicy(){
+        return new FixDiscountPolicy();
+    }
+
+    public MemberService memberService(){
+        return new MemberServiceImpl(getMemoryMemberRepository());
+    }
+
+    public OrderService orderService(){
+        return new OrderServiceImpl(getMemoryMemberRepository(),  getDiscountPolicy());
+    }
+
+}
+
+-> 수정에 용이하고, 중복을 방지함
+
+
