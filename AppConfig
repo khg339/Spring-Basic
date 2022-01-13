@@ -1,0 +1,58 @@
+
+기획자가 할인 방식 변경 요청
+고정 할인(1000원) -> 비율 할인(10%)
+
+
+------------------------------------------------------------------------------------
+
+
+DiscountPolicy 인터페이스
+- FixDiscountPolicy 클래스
+- RateDiscountPolicy 클래스
+
+-> 기존의 것을 바꾸지 않고 새로운 정책 도입 가능
+
+but,
+OrderServiceImpl클래스에서 할인 정책 객체를 FixDiscountPolicy로 지정해둠
+-> RateDiscountPolicy로 수정해야함
+-> OrderServiceImpl은 정책의 인터페이스 뿐만 아니라 구현클래스에도 의존함
+-> 이는 OCP, DIP를 위반
+-> 따라서 Only 인터페이스만 의존하도록 수정
+
+
+------------------------------------------------------------------------------------
+
+
+[AppConfig]
+: 구현 객체를 생성하고 연결해주는 역할
+
+
+<AppConfig.java>
+public class AppConfig {
+
+    public MemberService memberService(){
+        return new MemberServiceImpl(new MemoryMemberRepository());
+    }
+
+    public OrderService orderService(){
+        return new OrderServiceImpl(new MemoryMemberRepository(), new FixDiscountPolicy());
+    }
+}
+
+-> 어떤 객체를 생성할지 정의해주고 있음
+
+
+
+<OrderServiceImpl.java>
+public class OrderServiceImpl implements OrderService{
+
+    private final MemberRepository memberRepository;
+    private DiscountPolicy discountPolicy; //인터페이스에만 의존
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
+
+-> 생성자를 추가하여, AppConfig와 연결
+-> 인터페이스만 언급될 뿐, 구현 객체는 언급되지 않음
