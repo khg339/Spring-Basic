@@ -1,0 +1,44 @@
+ApplicationContext : Spring Container
+
+
+Modify using a spring container.
+
+<AppConping.java>
+@Configuration //스프링 구성정보
+public class AppConfig {
+
+    @Bean //스프링컨테이너에 등록
+    public MemoryMemberRepository getMemoryMemberRepository() {
+        return new MemoryMemberRepository();
+    }
+
+    @Bean
+    public DiscountPolicy getDiscountPolicy(){
+        return new RateDiscountPolicy();
+    }
+
+    @Bean
+    public MemberService memberService(){
+        return new MemberServiceImpl(getMemoryMemberRepository());
+    }
+
+    @Bean
+    public OrderService orderService(){
+        return new OrderServiceImpl(getMemoryMemberRepository(),  getDiscountPolicy());
+    }
+
+}
+
+
+How to declare
+
+<OrderApp.java>
+public class OrderApp {
+    public static void main(String[] args) {
+
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
+        OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
+   
+   }
+}
