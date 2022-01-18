@@ -16,9 +16,9 @@
 &nbsp;&nbsp;&nbsp;💡 4. 스프링 컨테이너와 스프링 빈  
 &nbsp;&nbsp;&nbsp;💡 5. 싱글톤 컨테이너  🚩  
 &nbsp;&nbsp;&nbsp;💡 6. 컴포넌트 스캔  
-&nbsp;&nbsp;&nbsp;💡 7. 컴포넌트 스캔  
-&nbsp;&nbsp;&nbsp;💡 8. 컴포넌트 스캔  
-&nbsp;&nbsp;&nbsp;💡 9. 컴포넌트 스캔  
+&nbsp;&nbsp;&nbsp;💡 7. 의존관계 자동 주입  
+&nbsp;&nbsp;&nbsp;💡 8. 빈 생명주기 콜백  
+&nbsp;&nbsp;&nbsp;💡 9. 빈 스코프  
 <br/><br/>
 
 
